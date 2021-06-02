@@ -1,0 +1,62 @@
+{% extends "calorie/base.html" %}
+{% block content %}
+<div>
+    <h5><a class="nav-item nav-link" href="{% url 'home' %}">Back</a></h5>
+</div>
+<article class="media content-section">
+    <div class="media-body">
+    <h2 class="article-title">{% for item in js %}{{item.name}}{% endfor %}'s Caloric Breakdown</h2>
+    <h4 class="article-title">Weight: {% for item in js %}{{item.weight}}{% endfor %}</h4>
+    <h4 class="article-title">Age: {% for item in js %}{{item.age}}{% endfor %}</h4>
+    <p class="article-content">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+            <script>
+            $(document).ready(function(){
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [{% for item in qs %}'{{item.food_type}}','{{item.food_type1}}','{{item.food_type2}}','{{item.food_type3}}',{% endfor %}],
+                    datasets: [{
+                        label: '# of Calories',
+                        data: [{% for item in qs %}'{{item.calories}}','{{item.calories1}}','{{item.calories2}}','{{item.calories3}}',{% endfor %}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });    
+            });
+            </script>
+            <canvas id="myChart" width="400" height="400"></canvas>
+    </p>
+    </div>
+</article>
+
+<body>
+
+</body>
+  
+{% endblock content %} 
